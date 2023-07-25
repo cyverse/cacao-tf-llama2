@@ -1,0 +1,30 @@
+---
+
+- name: APT ; ensure python3-pip is installed
+  apt:
+    name: python3-pip
+    state: present
+  become: true
+
+- name: GIT ; clone the repo
+  git: 
+    repo: https://github.com/kennethleungty/Llama-2-Open-Source-LLM-CPU-Inference.git
+    dest: "{{ WORKING_DIRECTORY }}/{{ REPO_NAME }}"
+    force: yes
+  
+- name: PIP ; install dependencies
+  pip:
+    requirements: "{{ WORKING_DIRECTORY }}/{{ REPO_NAME }}/requirements.txt"
+
+- name: SHELL ; generate vector store
+  shell: 
+    cmd: "python3 ./db_build.py"
+    chdir: "{{ WORKING_DIRECTORY }}/{{ REPO_NAME }}"
+  # TODO: conditionally execute this somehow.  The repo includes vectorstore/db_faiss/index.faiss and vectorstore/db_faiss/index.pkl which are binaries
+
+- name: Download the model
+  get_url:
+    url: "{{ QUANTIZED_LLAMA_MODEL_URL }}" 
+    dest: "{{ WORKING_DIRECTORY }}/{{ REPO_NAME }}/models/{{ LLAMA_MODEL_NAME }}"
+  # TODO: this takes a long time as it's 8G of stuff, figure out a status update or something?
+  # TODO: use https://docs.ansible.com/ansible/latest/collections/ansible/builtin/urlsplit_filter.html instead of LLAMA_MODEL_NAME
