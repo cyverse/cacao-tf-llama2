@@ -1,3 +1,8 @@
+openrc.sh
+.terraform.lock.hcl
+hosts.yml
+
+
 # Local .terraform directories
 **/.terraform/*
 

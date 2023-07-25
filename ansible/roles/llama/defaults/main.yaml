@@ -1,0 +1,6 @@
+---
+
+WORKING_DIRECTORY: ~/
+REPO_NAME: Llama-2-Open-Source-LLM-CPU-Inference
+QUANTIZED_LLAMA_MODEL_URL: https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/resolve/main/llama-2-7b-chat.ggmlv3.q8_0.bin
+LLAMA_MODEL_NAME: llama-2-7b-chat.ggmlv3.q8_0.bin
